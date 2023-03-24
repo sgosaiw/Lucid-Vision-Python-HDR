@@ -1,15 +1,3 @@
-# -----------------------------------------------------------------------------
-# Copyright (c) 2022, Lucid Vision Labs, Inc.
-#
-# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-# EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
-# OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
-# NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS
-# BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN
-# ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
-# CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-# THE SOFTWARE.
-# -----------------------------------------------------------------------------
 
 import time
 from arena_api.system import system
@@ -20,7 +8,7 @@ import ctypes
 import time
 '''
 Exposure: For High Dynamic Range
-	This example demonstrates dynamically updating the exposure time in order to
+	This script takes HDr sequence dynamically updating the exposure time in order to
 	grab images appropriate for high dynamic range (or HDR) imaging. HDR images
 	can be created by combining a number of images acquired at various exposure
 	times. This example demonstrates grabbing three images for this purpose,
@@ -35,8 +23,8 @@ Exposure: For High Dynamic Range
 TAB1 = "  "
 TAB2 = "    "
 num_images = 5
-exp1 = 40000.0
-exp2 = 20000.0
+exp1 = 40000.0   #change the exposure times here exp1,exp2,exp3 (add more if neeeded)
+exp2 = 20000.0	 #exposures are in microseconds
 exp3 = 5000.0
 
 
@@ -183,7 +171,7 @@ def acquire_hdr_images(device, nodes, initial_vals, exp1, exp2, exp3):
 	if (exp1 > nodes['ExposureTime'].max
 	or exp3 < nodes['ExposureTime'].min):
 
-		exp1 = nodes['ExposureTime'].max
+		exp1 = nodes['ExposureTime'].max     # if maximum exposure specified exceeds the limit then that one is capped
 		#exp2 = exp1 / 2.
 		#exp3 = exp2 / 2.
 		print(f"Exceeded Max exposure time of: {nodes['ExposureTime'].max}")			
@@ -225,14 +213,11 @@ def acquire_hdr_images(device, nodes, initial_vals, exp1, exp2, exp3):
 			trigger_software_once_armed(nodes)
 			image=device.get_buffer()
 
-			#print(f' Width X Height ='f'{image.width} x {image.height}')
-			#print('Converting image buffer to a numpy array')
 			pdata_as16 = ctypes.cast(image.pdata,ctypes.POINTER(ctypes.c_ushort))
 			nparray_reshaped = np.ctypeslib.as_array(pdata_as16,(image.height, image.width))
-			#print('Saving image')
-			#print(nparray_reshaped.shape)
+
 			img_fits = fits.PrimaryHDU(nparray_reshaped)
-			img_fits.writeto(f'hdr_image_{i}_{j + 1}.fits', overwrite=True)
+			img_fits.writeto(f'hdr_image_{i}_{j + 1}.fits', overwrite=True)     #change FITS file naming here
 			'''
 			Copy images for processing later
 			Use the image factory to copy the images for later processing. Images
