@@ -17,14 +17,20 @@ Download and install ArenaView SDK from LucidVision web https://thinklucid.com/d
 Download and install Anaconda python (if not installed already)
 Launch Anaconda prompt and do the following:
 
->>conda create -n "eclipse" python=3.6.8
->>conda activate eclipse
->>cd C:\ProgramData\Lucid Vision Labs\ArenaView\ArenaPy
->>pip install arena_api-*-py3-none-any.whl
->>pip install -r requirements_win.txt
+conda create -n "eclipse" python=3.6.8
 
->>cd "C:\ProgramData\Lucid Vision Labs\Examples\src\Python Source Code Examples"
->>python py_acquisition.py
+conda activate eclipse
+
+cd C:\ProgramData\Lucid Vision Labs\ArenaView\ArenaPy
+
+pip install arena_api-*-py3-none-any.whl
+
+pip install -r requirements_win.txt
+
+
+cd "C:\ProgramData\Lucid Vision Labs\Examples\src\Python Source Code Examples"
+
+python py_acquisition.py
 
 If this script finds camera and reads images from it without error then the camera is working, and is configured properly. 
 If not then check camera connections and run ArenaConfig and ArenaView to troubleshoot.   
